@@ -1,5 +1,8 @@
-mod api;
+mod adapters;
+mod domain;
+
+use adapters::api::*;
 
 fn main() -> std::io::Result<()> {
-    api::server::setup()
+    server::setup()
 }
