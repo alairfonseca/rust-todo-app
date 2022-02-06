@@ -1,5 +1,6 @@
 mod adapters;
 mod domain;
+mod config;
 
 use adapters::api::*;
 

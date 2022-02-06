@@ -1,10 +1,10 @@
 use actix_web::web;
-use super::super::super::super::domain::ports::use_case::UseCase;
-use super::super::server::AppState;
+use crate::domain::ports::use_case::UseCase;
+use crate::config::app_state::AppState;
 
 pub async fn create(service: web::Data<AppState>) -> String {
     println!("PASSOU AQUI!");
-    service.create_board_uc.execute("hue".to_string())
+    service.create_board_use_case.execute("hue".to_string())
 }
 
 pub async fn get() -> String {
