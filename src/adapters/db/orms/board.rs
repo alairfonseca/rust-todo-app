@@ -7,7 +7,7 @@ pub struct Board {
     pub name: String,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Serialize, Deserialize)]
 #[table_name="boards"]
 pub struct NewBoard {
     pub name: String,

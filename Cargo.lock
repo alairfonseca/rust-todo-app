@@ -294,6 +294,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.53"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "94a45b455c14666b85fc40a019e8ab9eb75e3a124e05494f5397122bc9eb06e0"
+
+[[package]]
 name = "async-trait"
 version = "0.1.52"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1224,6 +1230,7 @@ name = "rust-todo-app"
 version = "0.1.0"
 dependencies = [
  "actix-web",
+ "anyhow",
  "diesel",
  "dotenv",
  "serde",

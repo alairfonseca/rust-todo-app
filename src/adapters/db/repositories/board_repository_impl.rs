@@ -15,18 +15,17 @@ impl BoardRepositoryImpl {
 }
 
 impl BoardRepository for BoardRepositoryImpl {
-    fn create_board(&self, payload: CreateBoardPayload, db_connection: &PgConnection) -> String {
+    fn create_board(&self, payload: CreateBoardPayload, db_connection: &PgConnection) -> Result<Board, diesel::result::Error> {
         println!("executando repositorio...");
         
         let new_board = NewBoard {
             name: payload.name.clone(),
         };
 
-        diesel::insert_into(boards::table)
+        let result = diesel::insert_into(boards::table)
             .values(&new_board)
-            .get_result::<Board>(db_connection)
-            .expect("Error saving new post");
+            .get_result::<Board>(db_connection)?;
 
-        payload.name
+        Ok(result)
     }
 }
