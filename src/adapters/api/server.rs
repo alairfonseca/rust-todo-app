@@ -1,6 +1,6 @@
 use actix_web::{ App, HttpServer };
 
-use crate::config::app_state::app_state_factory;
+use crate::config::app_state_factory;
 
 use super::routes::*;
 

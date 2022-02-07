@@ -1,3 +1,5 @@
+use diesel::PgConnection;
+
 use super::super::ports::use_case::UseCase;
 use crate::domain::ports::repositories::board_repository::{BoardRepository, CreateBoardPayload};
 
@@ -20,12 +22,12 @@ impl<T> CreateBoardUseCase<T>
 impl<T> UseCase<String, String> for CreateBoardUseCase<T>
     where T: BoardRepository
 {
-    fn execute(&self, payload: String) -> String {
+    fn execute(&self, payload: String, db_connection: &PgConnection) -> String {
         let pl = CreateBoardPayload {
             name: payload,
         };
 
-        self.board_repository.create_board(pl)
+        self.board_repository.create_board(pl, db_connection)
     }
 }
 
