@@ -1,12 +1,20 @@
-// use serde::{Serialize, Deserialize};
-use diesel::PgConnection;
-use crate::adapters::db::orms::board::Board;
+use anyhow::Error;
 
-// #[derive(Serialize, Deserialize, Debug)]
-pub struct CreateBoardPayload {
+use serde::{Deserialize, Serialize};
+use crate::schema::boards;
+
+#[derive(Debug, Serialize, Deserialize, Queryable)]
+pub struct Board {
+    pub id: i32,
+    pub name: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Insertable)]
+#[table_name="boards"]
+pub struct NewBoard {
     pub name: String,
 }
 
 pub trait BoardRepository {
-    fn create_board(&self, payload: CreateBoardPayload, db_connection: &PgConnection) -> Result<Board, diesel::result::Error>;
+    fn create_board(&self, payload: NewBoard) -> Result<Board, Error>;
 }

@@ -1,41 +1,28 @@
-use actix_web::web;
-use diesel::PgConnection;
-use crate::adapters::db::orms::board::NewBoard;
-
-use super::super::ports::use_case::UseCase;
-use crate::{domain::ports::repositories::board_repository::{BoardRepository, CreateBoardPayload}, adapters::db::orms::board::Board};
+use crate::domain::ports::use_case::UseCase;
+use crate::domain::ports::repositories::board_repository::{
+    BoardRepository, Board, NewBoard
+};
 use anyhow::Error;
 
-pub struct CreateBoardUseCase<T>
-    where T: BoardRepository
-{
-    board_repository: T
+pub struct CreateBoardUseCase {
+    board_repository: Box<dyn BoardRepository>,
 }
 
-impl<T> CreateBoardUseCase<T>
-    where T: BoardRepository
-{
-    pub fn new(board_repository: T) -> Self {
+impl CreateBoardUseCase {
+    pub fn new(board_repository: Box<dyn BoardRepository>) -> Self {
         Self {
             board_repository,
         }
     }
 }
 
-impl<T> UseCase<String, Board> for CreateBoardUseCase<T>
-    where T: BoardRepository
-{
-    fn execute(&self, payload: web::Json<NewBoard>, db_connection: &PgConnection) -> Result<Board, Error> {
-        let pl = CreateBoardPayload {
-            name: payload.name.clone(),
-        };
-
-        let insert_result = self.board_repository.create_board(pl, db_connection);
+impl UseCase<NewBoard, Board> for CreateBoardUseCase {
+    fn execute(&self, payload: NewBoard) -> Result<Board, Error> {
+        let insert_result = self.board_repository.create_board(payload);
 
         match insert_result {
             Ok(value) => Ok(value),
-            Err(err) => Err(Error::new(err)),
+            Err(err) => Err(err),
         }
     }
 }
-
