@@ -3,7 +3,7 @@ use anyhow::Error;
 use serde::{Deserialize, Serialize};
 use crate::schema::boards;
 
-#[derive(Debug, Serialize, Deserialize, Queryable, AsChangeset)]
+#[derive(Identifiable, Debug, Serialize, Deserialize, Queryable, AsChangeset)]
 pub struct Board {
     pub id: i32,
     pub name: String,
