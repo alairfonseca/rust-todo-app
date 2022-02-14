@@ -3,7 +3,7 @@ use anyhow::Error;
 use serde::{Deserialize, Serialize};
 use crate::schema::boards;
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, Queryable, AsChangeset)]
 pub struct Board {
     pub id: i32,
     pub name: String,
@@ -17,4 +17,5 @@ pub struct NewBoard {
 
 pub trait BoardRepository {
     fn create_board(&self, payload: NewBoard) -> Result<Board, Error>;
+    fn update_board(&self, payload: Board) -> Result<Board, Error>;
 }

@@ -8,5 +8,6 @@ pub fn board_routes_setup(config: &mut web::ServiceConfig) {
 
     config
         .route(&base_path.define(String::from("/")), web::post().to(create))
-        .route(&base_path.define(String::from("/")), web::get().to(get));
+        .route(&base_path.define(String::from("/")), web::get().to(get))
+        .route(&base_path.define(String::from("/{id}")), web::put().to(update));
 }

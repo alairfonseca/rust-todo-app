@@ -24,4 +24,13 @@ impl BoardRepository for BoardRepositoryImpl {
 
         Ok(result)
     }
+
+    fn update_board(&self, payload: Board) -> Result<Board, Error> {
+        let result = diesel::update(boards::table)
+            .filter(boards::id.eq_all(payload.id))
+            .set(&payload)
+            .get_result::<Board>(&self.db_connection)?;
+
+        Ok(result)
+    }
 }
