@@ -6,7 +6,7 @@ use crate::{
     adapters::db::BoardRepositoryImpl,
     domain::use_cases::{CreateBoardUseCase, UpdateBoardUseCase}
 };
-use std::sync::Arc;
+use std::rc::Rc;
 
 use std::env;
 
@@ -15,15 +15,14 @@ pub fn app_state_factory() -> AppState {
 
     println!("instantiating modules...");
 
-    let db_connection = PgConnection::establish(&database_url).expect("Error connecting to database");
+    let db_connection = Rc::new(PgConnection::establish(&database_url).expect("Error connecting to database"));
 
     // repositories
-    let board_repository = Box::new(BoardRepositoryImpl::new(db_connection));
+    let board_repository = Rc::new(BoardRepositoryImpl::new(db_connection.clone()));
 
     // use cases
-    let create_board_use_case = CreateBoardUseCase::new(Box::new(BoardRepositoryImpl::new(PgConnection::establish(&database_url).expect("Error connecting to database"))));
-    let update_board_use_case = UpdateBoardUseCase::new(Box::new(BoardRepositoryImpl::new(PgConnection::establish(&database_url).expect("Error connecting to database"))));
-
+    let create_board_use_case = CreateBoardUseCase::new(board_repository.clone());
+    let update_board_use_case = UpdateBoardUseCase::new(board_repository.clone());
 
     let app_state = AppState {
         create_board_use_case,

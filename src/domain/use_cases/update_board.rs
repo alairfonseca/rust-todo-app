@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use crate::domain::ports::use_case::UseCase;
 use crate::domain::ports::repositories::board_repository::{
     BoardRepository, Board
@@ -5,11 +7,11 @@ use crate::domain::ports::repositories::board_repository::{
 use anyhow::Error;
 
 pub struct UpdateBoardUseCase {
-    board_repository: Box<dyn BoardRepository>,
+    board_repository: Rc<dyn BoardRepository>,
 }
 
 impl UpdateBoardUseCase {
-    pub fn new(board_repository: Box<dyn BoardRepository>) -> Self {
+    pub fn new(board_repository: Rc<dyn BoardRepository>) -> Self {
         Self {
             board_repository,
         }
