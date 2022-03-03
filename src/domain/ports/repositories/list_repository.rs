@@ -18,6 +18,6 @@ pub struct NewList {
     pub title: String,
 }
 
-pub trait BoardRepository {
+pub trait ListRepository {
     fn create_list(&self, payload: NewList) -> Result<List, Error>;
 }
