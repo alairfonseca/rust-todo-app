@@ -6,7 +6,7 @@ use crate::config::AppState;
 pub async fn create(service: web::Data<AppState>, body: web::Json<NewTask>) -> impl Responder {
     let new_task = NewTask {
         title: body.title.clone(),
-        board_id: body.board_id.clone(),
+        list_id: body.list_id.clone(),
         description: body.description.clone(),
     };
 

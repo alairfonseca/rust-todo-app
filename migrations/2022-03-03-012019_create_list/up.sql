@@ -1,0 +1,5 @@
+CREATE TABLE lists (
+  id SERIAL NOT NULL PRIMARY KEY,
+  board_id INTEGER NOT NULL,
+  title VARCHAR NOT NULL
+);
