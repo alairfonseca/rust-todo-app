@@ -6,4 +6,6 @@ COPY . .
 
 RUN cargo install --path .
 
+EXPOSE 8080
+
 CMD ["rust-todo-app"]
