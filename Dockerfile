@@ -6,4 +6,4 @@ COPY . .
 
 RUN cargo install --path .
 
-CMD ["rust_todo_app"]
+CMD ["rust-todo-app"]

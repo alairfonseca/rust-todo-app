@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: rust_todo_app
+        image: rust-todo-app
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
         env:
